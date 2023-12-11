@@ -25,6 +25,8 @@ const App = () => {
         Route(2, div('这是 ID 为 2 的页面')),
     )
 }
+
+const routeId = router()
 ```
 
 ## 设置路由事件
@@ -41,4 +43,15 @@ const routeId = router(add => {
         console.log('当前位于 ID 为 1 的页面')
     })
 })
+```
+
+## 切换路由
+
+```typescript
+Route(0,
+    button({
+        onclick() { routeId.val = 1 }
+    }, '跳转到 ID 为 1 的页面')
+)
+Route(1, '这里是 1')
 ```
