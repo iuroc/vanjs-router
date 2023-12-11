@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "vanjs-core": "^1.2.6"
+  },
+  "name": "van-router",
+  "version": "1.0.0",
+  "description": "基于 Van.js 的前端路由控制系统",
+  "main": "index.js",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iuroc/van-router.git"
+  },
+  "keywords": [
+    "vanjs",
+    "router",
+    "javascript",
+    "iuroc"
+  ],
+  "author": "iuroc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iuroc/van-router/issues"
+  },
+  "homepage": "https://github.com/iuroc/van-router#readme"
+}
