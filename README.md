@@ -1,20 +1,20 @@
-# van-router
+# vanjs-router
 
 > 基于 Van.js 的前端路由控制系统
 
 ## 安装
 
-安装 `van.js` 和 `van-router`。
+安装 `van.js` 和 `vanjs-router`。
 
 ```
-npm install vanjs-core van-router
+npm install vanjs-core vanjs-router
 ```
 
 ## 导入使用
 
 ```typescript
 import van from 'vanjs-core'
-import { router, Route } from 'van-router'
+import { router, Route } from 'vanjs-router'
 
 const { div } = van.tags
 

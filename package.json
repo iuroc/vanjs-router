@@ -2,7 +2,7 @@
   "dependencies": {
     "vanjs-core": "^1.2.6"
   },
-  "name": "van-router",
+  "name": "vanjs-router",
   "version": "1.0.0",
   "description": "基于 Van.js 的前端路由控制系统",
   "main": "index.js",
