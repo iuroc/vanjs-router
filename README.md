@@ -3,6 +3,8 @@
 
 > Frontend routing control system based on Van.js
 
+[English](./README.md) | [简体中文](./README_zh.md)
+
 ### Installation
 
 Install van.js and vanjs-router.
