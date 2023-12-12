@@ -1,16 +1,17 @@
+
 # vanjs-router
 
-> 基于 Van.js 的前端路由控制系统
+> Frontend routing control system based on Van.js
 
-## 安装
+### Installation
 
-安装 `van.js` 和 `vanjs-router`。
+Install van.js and vanjs-router.
 
-```
+```bash
 npm install vanjs-core vanjs-router
 ```
 
-## 导入使用
+### Import and Usage
 
 ```typescript
 import van from 'vanjs-core'
@@ -20,38 +21,38 @@ const { div } = van.tags
 
 const App = () => {
     return div(
-        Route(0, div('这是 ID 为 0 的页面')),
-        Route(1, div('这是 ID 为 1 的页面')),
-        Route(2, div('这是 ID 为 2 的页面')),
+        Route(0, div('This is the page with ID 0')),
+        Route(1, div('This is the page with ID 1')),
+        Route(2, div('This is the page with ID 2')),
     )
 }
 
 const routeId = router()
 ```
 
-## 设置路由事件
+### Set Route Events
 
 ```typescript
 const routeId = router(add => {
     add(0, () => {
-        console.log('当前位于 ID 为 0 的页面')
+        console.log('Currently on the page with ID 0')
     })
     add(0, () => {
-        console.log('事件叠加')
+        console.log('Event overlay')
     })
     add(1, () => {
-        console.log('当前位于 ID 为 1 的页面')
+        console.log('Currently on the page with ID 1')
     })
 })
 ```
 
-## 切换路由
+### Switch Routes
 
 ```typescript
 Route(0,
     button({
         onclick() { routeId.val = 1 }
-    }, '跳转到 ID 为 1 的页面')
+    }, 'Go to the page with ID 1')
 )
-Route(1, '这里是 1')
+Route(1, 'This is page 1')
 ```
