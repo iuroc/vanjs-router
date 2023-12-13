@@ -29,6 +29,7 @@ const App = () => {
     )
 }
 
+// You can place this line of code anywhere without needing to consider the order.
 const routeId = router()
 ```
 
