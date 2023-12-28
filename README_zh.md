@@ -54,6 +54,6 @@ Route(0,
     button({
         onclick() { routeId.val = 1 }
     }, '跳转到 ID 为 1 的页面')
-)
+),
 Route(1, '这里是 1')
 ```
