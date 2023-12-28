@@ -56,6 +56,6 @@ Route(0,
     button({
         onclick() { routeId.val = 1 }
     }, 'Go to the page with ID 1')
-)
+),
 Route(1, 'This is page 1')
 ```
