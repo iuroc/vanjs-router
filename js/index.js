@@ -12,18 +12,17 @@ window.addEventListener('hashchange', () => {
 });
 const Route = (config, ...rest) => {
     let firstLoad = true;
-    const dom = div({ hidden: () => config.name != activeRoute.val.name }, rest);
     van.derive(() => {
         if (activeRoute.val.name == config.name) {
             if (firstLoad && config.onFirst) {
-                config.onFirst({ ...activeRoute.val, dom });
+                config.onFirst(activeRoute.val);
                 firstLoad = false;
             }
             if (config.onLoad)
-                config.onLoad({ ...activeRoute.val, dom });
+                config.onLoad(activeRoute.val);
         }
     });
-    return dom;
+    return div({ hidden: () => config.name != activeRoute.val.name }, rest);
 };
 const routeTo = (name = 'home', args = []) => {
     if (args.length == 0) {
