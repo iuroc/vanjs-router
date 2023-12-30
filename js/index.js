@@ -14,12 +14,13 @@ const Route = (config, ...rest) => {
     let firstLoad = true;
     const dom = div({ hidden: () => config.name != activeRoute.val.name }, rest);
     van.derive(() => {
-        if (activeRoute.val.name == config.name && config.onLoad) {
+        if (activeRoute.val.name == config.name) {
             if (firstLoad && config.onFirst) {
                 config.onFirst({ ...activeRoute.val, dom });
                 firstLoad = false;
             }
-            config.onLoad({ ...activeRoute.val, dom });
+            if (config.onLoad)
+                config.onLoad({ ...activeRoute.val, dom });
         }
     });
     return dom;
