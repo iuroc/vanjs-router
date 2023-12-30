@@ -3,9 +3,9 @@
         "vanjs-core": "^1.2.7"
     },
     "name": "vanjs-router",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "description": "基于 Van.js 的前端路由控制系统",
-    "main": "index.js",
+    "main": "js/index.js",
     "devDependencies": {
         "typescript": "^5.3.3"
     },
