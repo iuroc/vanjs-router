@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "outDir": "js",
         "strict": true,
         "module": "ESNext",
         "moduleResolution": "Bundler",
