@@ -9,18 +9,13 @@ interface Route {
     /** 路由参数 */
     readonly args: readonly string[]
 }
-
-interface RouteWithDom extends Route {
-    dom: HTMLDivElement
-}
-
 interface RouteSetting {
     /** 路由名称 */
     readonly name: string
     /** 初次路由载入 */
-    onFirst?: (route: RouteWithDom) => void
+    onFirst?: (route: Route) => void
     /** 每次路由载入 */
-    onLoad?: (route: RouteWithDom) => void
+    onLoad?: (route: Route) => void
 }
 /** 从 `location.hash` 获取当前路由 */
 const nowRoute = () => {
@@ -37,17 +32,16 @@ window.addEventListener('hashchange', () => {
 
 const Route = (config: RouteSetting, ...rest: readonly ChildDom[]) => {
     let firstLoad = true
-    const dom = div({ hidden: () => config.name != activeRoute.val.name }, rest)
     van.derive(() => {
         if (activeRoute.val.name == config.name) {
             if (firstLoad && config.onFirst) {
-                config.onFirst({ ...activeRoute.val, dom })
+                config.onFirst(activeRoute.val)
                 firstLoad = false
             }
-            if (config.onLoad) config.onLoad({ ...activeRoute.val, dom })
+            if (config.onLoad) config.onLoad(activeRoute.val)
         }
     })
-    return dom
+    return div({ hidden: () => config.name != activeRoute.val.name }, rest)
 }
 
 const routeTo = (name: Route['name'] = 'home', args: Route['args'] = []) => {
