@@ -2,6 +2,8 @@
 
 > Frontend routing control system based on Van.js
 
+- [Video Tutorial](https://www.bilibili.com/video/BV13K411474d/)
+
 <!-- [English](./README.md) | [简体中文](./README_zh.md) -->
 
 ### Installation
