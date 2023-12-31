@@ -1,6 +1,6 @@
 {
     "dependencies": {
         "vanjs-core": "^1.2.7",
-        "vanjs-router": "^1.1.4"
+        "vanjs-router": "^1.1.5"
     }
 }

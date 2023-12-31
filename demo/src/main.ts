@@ -1,75 +1,42 @@
 import van from 'vanjs-core'
 import { Route, routeTo } from 'vanjs-router'
 
-const { button, div, h2, input, p } = van.tags
+const { button, div } = van.tags
 
-const Home = () => {
-    const num = van.state(0)
-    return Route({ name: 'home' },
-        h2('Home'),
-        div({ style: 'margin-bottom: 20px;' },
-            button({
-                onclick() {
-                    routeTo('about')
-                }
-            }, 'Go To About'),
+const App = () => {
+    return div(
+        Route({ name: 'home' },
+            'Page Home. ',
+            button({ onclick: () => routeTo('about') }, 'Go To About'),
+            ' ',
+            button({ onclick: () => routeTo('list', ['hot', '15']) }, 'Go To Hot List'),
         ),
-        div(
-            button({
-                onclick() {
-                    num.val--
+        Route({ name: 'about' },
+            button({ onclick: () => routeTo('home') }, 'Back To Home'), ' ',
+            'Page About.',
+        ),
+        () => {
+            const listType = van.state('')
+            const listId = van.state('')
+            const welcome = van.state('')
+            return Route({
+                name: 'list',
+                onFirst() {
+                    welcome.val = 'Welcome!'
+                },
+                onLoad(route) {
+                    let [type, id] = route.args
+                    listType.val = type
+                    listId.val = id
                 }
-            }, '-'),
-            input({
-                style: 'width: 100px;',
-                value: num, oninput(event) {
-                    const target = event.target as HTMLInputElement
-                    num.val = parseInt(target.value)
-                }
-            }),
-            button({
-                onclick() {
-                    num.val++
-                }
-            }, '+'),
-            button({
-                onclick() {
-                    routeTo('showNum', [num.val.toString()])
-                }
-            }, 'Show Num')
-        )
-    )
-}
-
-const About = () => {
-
-    return Route({ name: 'about' },
-        h2('About'),
-        p('This is a great site!'),
-        button({
-            onclick() {
-                routeTo('home')
-            }
-        }, 'Back To Home')
-    )
-}
-
-const ShowNum = () => {
-    const num = van.state(0)
-    return Route({
-        name: 'showNum',
-        onLoad(route) {
-            num.val = parseInt(route.args[0])
+            },
+                button({ onclick: () => routeTo('home') }, 'Back To Home'), ' ',
+                welcome,
+                div('List Type: ', listType),
+                div('List Id: ', listId),
+            )
         }
-    },
-        h2('Show Num'),
-        h2({ style: 'color: red;' }, num),
-        button({
-            onclick() {
-                routeTo('home')
-            }
-        }, 'Back To Home')
     )
 }
 
-van.add(document.body, Home(), About(), ShowNum())
+van.add(document.body, App())

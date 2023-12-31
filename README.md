@@ -1,9 +1,8 @@
-
 # vanjs-router
 
 > Frontend routing control system based on Van.js
 
-[English](./README.md) | [简体中文](./README_zh.md)
+<!-- [English](./README.md) | [简体中文](./README_zh.md) -->
 
 ### Installation
 
@@ -17,45 +16,53 @@ npm install vanjs-core vanjs-router
 
 ```typescript
 import van from 'vanjs-core'
-import { router, Route } from 'vanjs-router'
+import { Route, routeTo } from 'vanjs-router'
 
-const { div } = van.tags
+const { button, div } = van.tags
 
 const App = () => {
     return div(
-        Route(0, div('This is the page with ID 0')),
-        Route(1, div('This is the page with ID 1')),
-        Route(2, div('This is the page with ID 2')),
+        Route({ name: 'home' },
+            'Page Home. ',
+            button({ onclick: () => routeTo('about') }, 'Go To About'),
+            ' ',
+            button({ onclick: () => routeTo('list', ['hot', '15']) }, 'Go To Hot List'),
+        ),
+        Route({ name: 'about' },
+            button({ onclick: () => routeTo('home') }, 'Back To Home'), ' ',
+            'Page About.',
+        ),
+        () => {
+            const listType = van.state('')
+            const listId = van.state('')
+            const welcome = van.state('')
+            return Route({
+                name: 'list',
+                onFirst() {
+                    welcome.val = 'Welcome!'
+                },
+                onLoad(route) {
+                    let [type, id] = route.args
+                    listType.val = type
+                    listId.val = id
+                }
+            },
+                button({ onclick: () => routeTo('home') }, 'Back To Home'), ' ',
+                welcome,
+                div('List Type: ', listType),
+                div('List Id: ', listId),
+            )
+        }
     )
 }
 
-// You can place this line of code anywhere without needing to consider the order.
-const routeId = router()
-```
-
-### Set Route Events
-
-```typescript
-const routeId = router(add => {
-    add(0, () => {
-        console.log('Currently on the page with ID 0')
-    })
-    add(0, () => {
-        console.log('Event overlay')
-    })
-    add(1, () => {
-        console.log('Currently on the page with ID 1')
-    })
-})
+van.add(document.body, App())
 ```
 
 ### Switch Routes
 
 ```typescript
-Route(0,
-    button({
-        onclick() { routeId.val = 1 }
-    }, 'Go to the page with ID 1')
-),
-Route(1, 'This is page 1')
+routeTo('home')               // location.hash = ''
+routeTo('about')              // location.hash = '#/about'
+routeTo('list', ['hot', 15])  // location.hash = '#/list/hot/15'
 ```

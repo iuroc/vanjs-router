@@ -44,7 +44,7 @@ const Route = (config: RouteSetting, ...rest: readonly ChildDom[]) => {
     return div({ hidden: () => config.name != activeRoute.val.name }, rest)
 }
 
-const routeTo = (name: Route['name'] = 'home', args: Route['args'] = []) => {
+const routeTo = (name: Route['name'] = 'home', args: any[] = []) => {
     if (args.length == 0) {
         if (name == 'home') {
             location.hash = ''
