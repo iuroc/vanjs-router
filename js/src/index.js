@@ -28,7 +28,7 @@ const routeTo = (name = 'home', args = []) => {
     if (args.length == 0) {
         if (name == 'home') {
             location.hash = '';
-            history.replaceState(null, '', '/');
+            history.replaceState(null, '', './');
         }
         else
             location.hash = `/${name}`;
