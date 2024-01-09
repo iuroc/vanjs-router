@@ -35,3 +35,5 @@ const routeTo = (name = 'home', args = []) => {
     else
         location.hash = `/${name}/${args.join('/')}`;
 };
+window.Route = Route;
+Window.routeTo = routeTo;
