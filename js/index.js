@@ -11,6 +11,7 @@ window.addEventListener('hashchange', () => {
     activeRoute.val = nowRoute();
 });
 const Route = (config, ...rest) => {
+    const { name, onFirst, onLoad, ...otherProp } = config;
     let firstLoad = true;
     van.derive(() => {
         if (activeRoute.val.name == config.name) {
@@ -22,7 +23,7 @@ const Route = (config, ...rest) => {
                 config.onLoad(activeRoute.val);
         }
     });
-    return div({ hidden: () => config.name != activeRoute.val.name }, rest);
+    return div({ hidden: () => config.name != activeRoute.val.name, ...otherProp }, rest);
 };
 const routeTo = (name = 'home', args = []) => {
     if (args.length == 0) {

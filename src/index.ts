@@ -1,4 +1,4 @@
-import van, { ChildDom } from 'vanjs-core'
+import van, { ChildDom, PropValueOrDerived } from 'vanjs-core'
 
 const { div } = van.tags
 
@@ -9,6 +9,7 @@ interface Route {
     /** 路由参数 */
     readonly args: readonly string[]
 }
+
 interface RouteSetting {
     /** 路由名称 */
     readonly name: string
@@ -16,7 +17,9 @@ interface RouteSetting {
     onFirst?: (route: Route) => void
     /** 每次路由载入 */
     onLoad?: (route: Route) => void
+    [key: string]: PropValueOrDerived | undefined
 }
+
 /** 从 `location.hash` 获取当前路由 */
 const nowRoute = () => {
     const li = location.hash.split('/')
@@ -31,6 +34,7 @@ window.addEventListener('hashchange', () => {
 })
 
 const Route = (config: RouteSetting, ...rest: readonly ChildDom[]) => {
+    const { name, onFirst, onLoad, ...otherProp } = config
     let firstLoad = true
     van.derive(() => {
         if (activeRoute.val.name == config.name) {
@@ -41,7 +45,7 @@ const Route = (config: RouteSetting, ...rest: readonly ChildDom[]) => {
             if (config.onLoad) config.onLoad(activeRoute.val)
         }
     })
-    return div({ hidden: () => config.name != activeRoute.val.name }, rest)
+    return div({ hidden: () => config.name != activeRoute.val.name, ...otherProp }, rest)
 }
 
 const routeTo = (name: Route['name'] = 'home', args: any[] = []) => {
