@@ -15,7 +15,7 @@ npm install vanjs-core vanjs-router
 ```
 
 ```html
-<script src=""></script>
+<script src="https://cdn.jsdelivr.net/gh/iuroc/vanjs-router/js/vanjs-router-1.1.8.nomodule.js"></script>
 ```
 
 ### Import and Usage
