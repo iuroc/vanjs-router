@@ -14,6 +14,10 @@ Install van.js and vanjs-router.
 npm install vanjs-core vanjs-router
 ```
 
+```html
+<script src=""></script>
+```
+
 ### Import and Usage
 
 ```typescript
