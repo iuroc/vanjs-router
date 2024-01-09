@@ -1,4 +1,4 @@
-import van, { ChildDom, PropValueOrDerived } from 'vanjs-core'
+import van, { ChildDom, PropValueOrDerived, Props, PropsWithKnownKeys } from 'vanjs-core'
 
 const { div } = van.tags
 
@@ -33,19 +33,19 @@ window.addEventListener('hashchange', () => {
     activeRoute.val = nowRoute()
 })
 
-const Route = (config: RouteSetting, ...rest: readonly ChildDom[]) => {
-    const { name, onFirst, onLoad, ...otherProp } = config
+const Route = (first: RouteSetting & Props & PropsWithKnownKeys<HTMLDivElement>, ...rest: readonly ChildDom[]) => {
+    const { name, onFirst, onLoad, ...otherProp } = first
     let firstLoad = true
     van.derive(() => {
-        if (activeRoute.val.name == config.name) {
-            if (firstLoad && config.onFirst) {
-                config.onFirst(activeRoute.val)
+        if (activeRoute.val.name == first.name) {
+            if (firstLoad && first.onFirst) {
+                first.onFirst(activeRoute.val)
                 firstLoad = false
             }
-            if (config.onLoad) config.onLoad(activeRoute.val)
+            if (first.onLoad) first.onLoad(activeRoute.val)
         }
     })
-    return div({ hidden: () => config.name != activeRoute.val.name, ...otherProp }, rest)
+    return div({ hidden: () => first.name != activeRoute.val.name, ...otherProp }, rest)
 }
 
 const routeTo = (name: Route['name'] = 'home', args: any[] = []) => {

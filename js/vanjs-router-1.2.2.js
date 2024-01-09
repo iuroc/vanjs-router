@@ -9,19 +9,20 @@ const activeRoute = van.state(nowRoute());
 window.addEventListener('hashchange', () => {
     activeRoute.val = nowRoute();
 });
-const Route = (config, ...rest) => {
+const Route = (first, ...rest) => {
+    const { name, onFirst, onLoad, ...otherProp } = first;
     let firstLoad = true;
     van.derive(() => {
-        if (activeRoute.val.name == config.name) {
-            if (firstLoad && config.onFirst) {
-                config.onFirst(activeRoute.val);
+        if (activeRoute.val.name == first.name) {
+            if (firstLoad && first.onFirst) {
+                first.onFirst(activeRoute.val);
                 firstLoad = false;
             }
-            if (config.onLoad)
-                config.onLoad(activeRoute.val);
+            if (first.onLoad)
+                first.onLoad(activeRoute.val);
         }
     });
-    return div({ hidden: () => config.name != activeRoute.val.name }, rest);
+    return div({ hidden: () => first.name != activeRoute.val.name, ...otherProp }, rest);
 };
 const routeTo = (name = 'home', args = []) => {
     if (args.length == 0) {
@@ -36,4 +37,4 @@ const routeTo = (name = 'home', args = []) => {
         location.hash = `/${name}/${args.join('/')}`;
 };
 window.Route = Route;
-Window.routeTo = routeTo;
+window.routeTo = routeTo;
