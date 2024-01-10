@@ -3,14 +3,14 @@ import van, { ChildDom, PropValueOrDerived, Props, PropsWithKnownKeys } from 'va
 const { div } = van.tags
 
 /** 来自 `location.hash` 的路由信息 */
-interface Route {
+export interface Route {
     /** 路由名称 */
     readonly name: string
     /** 路由参数 */
     readonly args: readonly string[]
 }
 
-interface RouteSetting {
+export interface RouteSetting {
     /** 路由名称 */
     readonly name: string
     /** 初次路由载入 */
@@ -21,19 +21,19 @@ interface RouteSetting {
 }
 
 /** 从 `location.hash` 获取当前路由 */
-const nowRoute = () => {
+export const nowRoute = () => {
     const li = location.hash.split('/')
     const route: Route = { name: li[1] ?? 'home', args: li.slice(2) }
     return route
 }
 
-const activeRoute = van.state(nowRoute())
+export const activeRoute = van.state(nowRoute())
 
 window.addEventListener('hashchange', () => {
     activeRoute.val = nowRoute()
 })
 
-const Route = (first: RouteSetting & Props & PropsWithKnownKeys<HTMLDivElement>, ...rest: readonly ChildDom[]) => {
+export const Route = (first: RouteSetting & Props & PropsWithKnownKeys<HTMLDivElement>, ...rest: readonly ChildDom[]) => {
     const { name, onFirst, onLoad, ...otherProp } = first
     let firstLoad = true
     van.derive(() => {
@@ -48,7 +48,7 @@ const Route = (first: RouteSetting & Props & PropsWithKnownKeys<HTMLDivElement>,
     return div({ hidden: () => first.name != activeRoute.val.name, ...otherProp }, rest)
 }
 
-const routeTo = (name: Route['name'] = 'home', args: any[] = []) => {
+export const routeTo = (name: Route['name'] = 'home', args: any[] = []) => {
     if (args.length == 0) {
         if (name == 'home') {
             location.hash = ''
@@ -56,5 +56,3 @@ const routeTo = (name: Route['name'] = 'home', args: any[] = []) => {
         } else location.hash = `/${name}`
     } else location.hash = `/${name}/${args.join('/')}`
 }
-
-export { Route, routeTo }

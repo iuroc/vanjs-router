@@ -1,16 +1,16 @@
 import van from 'vanjs-core';
 const { div } = van.tags;
 /** 从 `location.hash` 获取当前路由 */
-const nowRoute = () => {
+export const nowRoute = () => {
     const li = location.hash.split('/');
     const route = { name: li[1] ?? 'home', args: li.slice(2) };
     return route;
 };
-const activeRoute = van.state(nowRoute());
+export const activeRoute = van.state(nowRoute());
 window.addEventListener('hashchange', () => {
     activeRoute.val = nowRoute();
 });
-const Route = (first, ...rest) => {
+export const Route = (first, ...rest) => {
     const { name, onFirst, onLoad, ...otherProp } = first;
     let firstLoad = true;
     van.derive(() => {
@@ -25,7 +25,7 @@ const Route = (first, ...rest) => {
     });
     return div({ hidden: () => first.name != activeRoute.val.name, ...otherProp }, rest);
 };
-const routeTo = (name = 'home', args = []) => {
+export const routeTo = (name = 'home', args = []) => {
     if (args.length == 0) {
         if (name == 'home') {
             location.hash = '';
@@ -37,4 +37,3 @@ const routeTo = (name = 'home', args = []) => {
     else
         location.hash = `/${name}/${args.join('/')}`;
 };
-export { Route, routeTo };
