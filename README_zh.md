@@ -1,59 +1,75 @@
 # vanjs-router
 
-> 基于 Van.js 的前端路由控制系统
+> 基于 Van.js 的前端路由管理系统
+
+- [Video Tutorial](https://www.bilibili.com/video/BV13K411474d/)
 
 [English](./README.md) | [简体中文](./README_zh.md)
 
-## 安装
+### 安装
 
-安装 `van.js` 和 `vanjs-router`。
+安装 van.js 和 vanjs-router：
 
-```
+```bash
 npm install vanjs-core vanjs-router
 ```
 
-## 导入使用
+```html
+<script src="https://cdn.jsdelivr.net/gh/vanjs-org/van/public/van-1.2.7.nomodule.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/iuroc/vanjs-router/js/vanjs-router-1.2.3.js"></script>
+```
+
+### 导入和使用
 
 ```typescript
 import van from 'vanjs-core'
-import { router, Route } from 'vanjs-router'
+import { Route, routeTo } from 'vanjs-router'
 
-const { div } = van.tags
+const { button, div } = van.tags
 
 const App = () => {
     return div(
-        Route(0, div('这是 ID 为 0 的页面')),
-        Route(1, div('这是 ID 为 1 的页面')),
-        Route(2, div('这是 ID 为 2 的页面')),
+        Route({ name: 'home' },
+            'Page Home. ',
+            button({ onclick: () => routeTo('about') }, 'Go To About'),
+            ' ',
+            button({ onclick: () => routeTo('list', ['hot', '15']) }, 'Go To Hot List'),
+        ),
+        Route({ name: 'about' },
+            button({ onclick: () => routeTo('home') }, 'Back To Home'), ' ',
+            'Page About.',
+        ),
+        () => {
+            const listType = van.state('')
+            const listId = van.state('')
+            const welcome = van.state('')
+            return Route({
+                name: 'list',
+                onFirst() {
+                    welcome.val = 'Welcome!'
+                },
+                onLoad(route) {
+                    let [type, id] = route.args
+                    listType.val = type
+                    listId.val = id
+                }
+            },
+                button({ onclick: () => routeTo('home') }, 'Back To Home'), ' ',
+                welcome,
+                div('List Type: ', listType),
+                div('List Id: ', listId),
+            )
+        }
     )
 }
 
-const routeId = router()
+van.add(document.body, App())
 ```
 
-## 设置路由事件
+### 切换路由
 
 ```typescript
-const routeId = router(add => {
-    add(0, () => {
-        console.log('当前位于 ID 为 0 的页面')
-    })
-    add(0, () => {
-        console.log('事件叠加')
-    })
-    add(1, () => {
-        console.log('当前位于 ID 为 1 的页面')
-    })
-})
-```
-
-## 切换路由
-
-```typescript
-Route(0,
-    button({
-        onclick() { routeId.val = 1 }
-    }, '跳转到 ID 为 1 的页面')
-),
-Route(1, '这里是 1')
+routeTo('home')               // location.hash = ''
+routeTo('about')              // location.hash = '#/about'
+routeTo('list', ['hot', 15])  // location.hash = '#/list/hot/15'
 ```
