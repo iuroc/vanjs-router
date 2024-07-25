@@ -8,7 +8,7 @@ window.addEventListener('hashchange', event => {
     now.val = nowHash()
 })
 
-export type HandlerConfig = {
+export type HandlerConfig<E extends HTMLElement = HTMLElement> = {
     /** 当前路由的命中规则
      * - 如果传入字符串，则只匹配 Hash 以 `/` 分割后的首项，其余项作为 `args`。
      * - 如果传入正则，则匹配正则，捕获分组作为 `args`。
@@ -19,31 +19,31 @@ export type HandlerConfig = {
      * { rule: /list_(\d+)/ }
      * ```
      */
-    rule: Handler['rule']
+    rule: Handler<E>['rule']
     /** 当前路由页面的构建方法 */
-    Loader: Handler['Loader']
+    Loader: Handler<E>['Loader']
     /** 延迟加载页面，需要显示调用 `show()` 方法显示页面。 */
-    delayed?: Handler['delayed']
+    delayed?: Handler<E>['delayed']
     /** 首次路由命中事件，在 `onLoad` 之前执行。 */
-    onFirst?: Handler['onFirst']
+    onFirst?: Handler<E>['onFirst']
     /** 路由命中事件，在 `await onFirst()` 之后执行。 */
-    onLoad?: Handler['onLoad']
+    onLoad?: Handler<E>['onLoad']
 }
 
-export class Handler {
+export class Handler<E extends HTMLElement = HTMLElement> {
     private rule: string | RegExp
     /** 当前路由被命中后接收到的路由参数 */
     public args: string[] = []
-    private Loader: (this: Handler) => HTMLElement
+    private Loader: (this: Handler<E>) => E
     private delayed = false
-    private onFirst: (this: Handler) => any
-    private onLoad: (this: Handler) => any
+    private onFirst: (this: Handler<E>) => any
+    private onLoad: (this: Handler<E>) => any
     /** 路由根元素，对外导出，可直接添加到 DOM 树 */
     public element: HTMLElement
     /** 记录当前是否初次命中路由，决定是否执行 `onFirst` 事件。 */
     private isFirstLoad = true
 
-    constructor(config: HandlerConfig) {
+    constructor(config: HandlerConfig<E>) {
         // 载入路由的基础配置
         this.rule = config.rule
         this.Loader = config.Loader
@@ -100,7 +100,7 @@ export class Handler {
 }
 
 /** 创建一个自动管理路由状态的 DOM 元素 */
-export const Route = (config: HandlerConfig) => new Handler(config).element
+export const Route = <E extends HTMLElement = HTMLElement>(config: HandlerConfig<E>) => new Handler(config).element
 
 /**
  * 
