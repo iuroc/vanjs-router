@@ -6,5 +6,7 @@
 	"dependencies": {
 		"vanjs-core": "^1.5.1"
 	},
-	"type": "module"
+	"type": "module",
+	"name": "vanjs-router",
+	"version": "2.0.0"
 }
