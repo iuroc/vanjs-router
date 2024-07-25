@@ -44,6 +44,9 @@ export class Handler<E extends HTMLElement = HTMLElement> {
     private isFirstLoad = true
 
     constructor(config: HandlerConfig<E>) {
+        if (!config) throw new Error('config 不能为空')
+        if (!config.rule) throw new Error('rule 不能为空')
+        if (!config.Loader) throw new Error('Loader 不能为空')
         // 载入路由的基础配置
         this.rule = config.rule
         this.Loader = config.Loader
@@ -110,3 +113,5 @@ export const Route = <E extends HTMLElement = HTMLElement>(config: HandlerConfig
 export const goto = (name: string, ...args: any[]): void => {
     location.hash = `/${[name, ...args].join('/')}`
 }
+
+export default { nowHash, now, Handler, Route, goto }
