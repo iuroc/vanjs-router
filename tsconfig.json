@@ -5,6 +5,12 @@
         "lib": [
             "DOM",
             "ESNext"
-        ]
+        ],
+        "module": "ESNext",
+        "target": "ESNext",
+        "moduleResolution": "Bundler"
     },
+    "include": [
+        "src"
+    ]
 }
