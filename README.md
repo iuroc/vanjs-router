@@ -29,16 +29,26 @@ This is version 2. For version 1 documentation, please [click here](https://gith
           button({ onclick: () => goto("about") }, "Go To About")
         );
       },
+      onFirst() {
+        console.log("home onfirst");
+      },
+      onLoad() {
+        console.log("home onload");
+      },
     });
 
   const About = () =>
     Route({
       rule: "about",
+      delayed: true,
       Loader() {
         return div(
           "This Is About Page.",
           button({ onclick: () => goto("home") }, "Go To Home")
         );
+      },
+      onLoad() {
+        this.show();
       },
     });
 
