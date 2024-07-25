@@ -14,8 +14,12 @@ This is version 2. For version 1 documentation, please [click here](https://gith
 
 ## Quick Start
 
+```shell
+npm install vanjs-router
+```
+
 ```html
-<script src="https://cdn.jsdelivr.net/npm/vanjs-router@2.0.3/dist/vanjs-router.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanjs-router@2.0.4/dist/vanjs-router.min.js"></script>
 <script>
   const { Route, goto } = router;
   const { div, button } = van.tags;
