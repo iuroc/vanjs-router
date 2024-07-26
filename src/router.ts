@@ -111,7 +111,7 @@ export const Route = <E extends HTMLElement = HTMLElement>(config: HandlerConfig
  * @param args 路由参数
  */
 export const goto = (name: string, ...args: any[]): void => {
-    location.hash = `/${[name, ...args].join('/')}`
+    location.hash = name == 'home' && args.length == 0 ? '' : `/${[name, ...args].join('/')}`
 }
 
 export default { nowHash, now, Handler, Route, goto }
