@@ -19,7 +19,7 @@ npm install vanjs-router
 ```
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/vanjs-router@2.0.5/dist/vanjs-router.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanjs-router@latest/dist/vanjs-router.min.js"></script>
 <script>
   const { Route, goto } = router;
   const { div, button } = van.tags;
