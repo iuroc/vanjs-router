@@ -39,7 +39,7 @@ export class Handler<E extends HTMLElement = HTMLElement> {
     private onFirst: (this: Handler<E>) => any
     private onLoad: (this: Handler<E>) => any
     /** 路由根元素，对外导出，可直接添加到 DOM 树 */
-    public element: HTMLElement
+    public element: E
     /** 记录当前是否初次命中路由，决定是否执行 `onFirst` 事件。 */
     private isFirstLoad = true
 
