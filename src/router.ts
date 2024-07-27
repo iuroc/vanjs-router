@@ -113,6 +113,7 @@ export class Handler<E extends HTMLElement = HTMLElement> {
 export const Route = <E extends HTMLElement = HTMLElement>(config: HandlerConfig<E>): E => new Handler(config).element
 
 /**
+ * 跳转到指定 Hash
  * @param name 需要前往的路由名称，对应字符串类型的 rule
  * @param args 路由参数
  */
@@ -120,4 +121,5 @@ export const goto = (name: string, ...args: any[]): void => {
     location.hash = name == 'home' && args.length == 0 ? '' : `/${[name, ...args].join('/')}`
 }
 
+/** `vanjs-router` */
 export default { nowHash, now, Handler, Route, goto }
