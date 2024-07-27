@@ -1,13 +1,16 @@
 import van, { State } from 'vanjs-core'
 
+/** 返回当前的 Hash 值，自动去除前置 `#`，如果为空则返回 `home` */
 export const nowHash = (): string => location.hash ? location.hash.slice(1) : 'home'
 
+/** 当前的 Hash 状态，值通过 `nowHash()` 返回。 */
 export const now: State<string> = van.state(nowHash())
 
 window.addEventListener('hashchange', event => {
     now.val = nowHash()
 })
 
+/** 路由处理程序初始化配置项 */
 export type HandlerConfig<E extends HTMLElement = HTMLElement> = {
     /** 当前路由的命中规则
      * - 如果传入字符串，则只匹配 Hash 以 `/` 分割后的首项，其余项作为 `args`。
@@ -30,6 +33,7 @@ export type HandlerConfig<E extends HTMLElement = HTMLElement> = {
     onLoad?: Handler<E>['onLoad']
 }
 
+/** 路由处理程序实例 */
 export class Handler<E extends HTMLElement = HTMLElement> {
     private rule: string | RegExp
     /** 当前路由被命中后接收到的路由参数 */
@@ -82,6 +86,7 @@ export class Handler<E extends HTMLElement = HTMLElement> {
         })
     }
 
+    /** 判断当前 Hash 是否与本路由的规则匹配 */
     private matchHash(): false | { hash: string, args: string[] } {
         if (this.rule instanceof RegExp) {
             const match = now.val.match(this.rule)
@@ -93,10 +98,12 @@ export class Handler<E extends HTMLElement = HTMLElement> {
         return parts[0] == this.rule ? { hash: now.val, args: parts.slice(1) } : false
     }
 
+    /** 显示当前路由元素 */
     public show() {
         this.element.hidden = false
     }
 
+    /** 隐藏当前路由元素 */
     public hide() {
         this.element.hidden = true
     }
@@ -106,7 +113,6 @@ export class Handler<E extends HTMLElement = HTMLElement> {
 export const Route = <E extends HTMLElement = HTMLElement>(config: HandlerConfig<E>): E => new Handler(config).element
 
 /**
- * 
  * @param name 需要前往的路由名称，对应字符串类型的 rule
  * @param args 路由参数
  */
