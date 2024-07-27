@@ -1,8 +1,8 @@
-import van from 'vanjs-core'
+import van, { State } from 'vanjs-core'
 
-export const nowHash = () => location.hash ? location.hash.slice(1) : 'home'
+export const nowHash = (): string => location.hash ? location.hash.slice(1) : 'home'
 
-export const now = van.state(nowHash())
+export const now: State<string> = van.state(nowHash())
 
 window.addEventListener('hashchange', event => {
     now.val = nowHash()
@@ -103,7 +103,7 @@ export class Handler<E extends HTMLElement = HTMLElement> {
 }
 
 /** 创建一个自动管理路由状态的 DOM 元素 */
-export const Route = <E extends HTMLElement = HTMLElement>(config: HandlerConfig<E>) => new Handler(config).element
+export const Route = <E extends HTMLElement = HTMLElement>(config: HandlerConfig<E>): E => new Handler(config).element
 
 /**
  * 
