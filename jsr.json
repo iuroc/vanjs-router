@@ -1,0 +1,5 @@
+{
+    "name": "@iuroc/vanjs-router",
+    "version": "0.1.0",
+    "exports": "./src/router.ts"
+}
