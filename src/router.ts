@@ -1,9 +1,9 @@
 import van, { State } from 'vanjs-core'
 
-/** 返回当前的 Hash 值，自动去除前置 `#`，如果为空则返回 `home` */
-export const nowHash = (): string => location.hash ? location.hash.slice(1) : 'home'
+/** 返回当前的 `location.hash` 值的 `#/` 后面的部分，如果为空则返回 `home` */
+export const nowHash = (): string => location.hash ? location.hash.slice(2) : 'home'
 
-/** 当前的 Hash 状态，值通过 `nowHash()` 返回。 */
+/** 当前的 Hash 值，不含开头的 #，值通过 `nowHash()` 返回。 */
 export const now: State<string> = van.state(nowHash())
 
 window.addEventListener('hashchange', event => {
