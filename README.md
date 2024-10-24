@@ -34,10 +34,10 @@ npm install vanjs-router
           button({ onclick: () => goto("about") }, "Go To About")
         );
       },
-      onFirst() {
+      async onFirst() {
         console.log("home onfirst");
       },
-      onLoad() {
+      async onLoad() {
         console.log("home onload");
       },
     });
@@ -52,7 +52,7 @@ npm install vanjs-router
           button({ onclick: () => goto("home") }, "Go To Home")
         );
       },
-      onLoad() {
+      async onLoad() {
         this.show();
       },
     });
