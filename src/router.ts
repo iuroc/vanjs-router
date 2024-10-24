@@ -121,5 +121,20 @@ export const goto = (name: string, ...args: any[]): void => {
     location.hash = name == 'home' && args.length == 0 ? '' : `/${[name, ...args].join('/')}`
 }
 
+/**
+ * 路由重定向
+ * @param from 来源路由规则，用于定义 `rule` 属性
+ * @param to 目标路由规则，用于传入 `goto` 方法进行跳转
+ */
+export const redirect = (from: string | RegExp, to: string) => {
+    Route({
+        rule: from,
+        Loader: van.tags.div,
+        onLoad() {
+            goto(to)
+        },
+    })
+}
+
 /** `vanjs-router` */
-export default { nowHash, now, Handler, Route, goto }
+export default { nowHash, now, Handler, Route, goto, redirect }
