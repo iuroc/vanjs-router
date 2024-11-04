@@ -6,7 +6,7 @@ export const nowHash = (): string => location.hash ? location.hash.slice(2) : 'h
 /** 当前的 Hash 值，不含开头的 #，值通过 `nowHash()` 返回。 */
 export const now: State<string> = van.state(nowHash())
 
-window.addEventListener('hashchange', event => {
+window.addEventListener('hashchange', () => {
     now.val = nowHash()
 })
 
@@ -61,29 +61,27 @@ export class Handler<E extends HTMLElement = HTMLElement> {
         this.element = this.Loader()
         this.element.hidden = true
         // 根据 Hash 的变化，自动更新路由状态
-        van.derive(() => {
+        const func = async () => {
             // 获取当前路由的命中状态
             const match = this.matchHash()
-            const hidden = !match
             if (!match) {
                 // 未被命中，刷新路由，页面隐藏。
                 this.hide()
             } else {
                 // 路由命中
-                const func = async () => {
-                    // 将接收到的路由参数保存起来
-                    this.args.splice(0)
-                    this.args.push(...match.args)
-                    if (this.isFirstLoad) {
-                        this.isFirstLoad = false
-                        await this.onFirst()
-                    }
-                    await this.onLoad()
-                    if (!this.delayed) this.show()
+                // 将接收到的路由参数保存起来
+                this.args.splice(0) // 清空存储的旧参数
+                this.args.push(...match.args)
+                if (this.isFirstLoad) {
+                    this.isFirstLoad = false
+                    await this.onFirst()
                 }
-                func()
+                await this.onLoad()
+                if (!this.delayed) this.show()
             }
-        })
+        }
+        window.addEventListener('hashchange', func)
+        func()
     }
 
     /** 判断当前 Hash 是否与本路由的规则匹配 */
