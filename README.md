@@ -19,7 +19,8 @@ npm install vanjs-router
 ```
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/vanjs-router@latest/dist/vanjs-router.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/vanjs-org/van/public/van-1.5.2.nomodule.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vanjs-router@latest/dist/vanjs-router.min.js"></script>
 <script>
   const { Route, goto } = router;
   const { div, button } = van.tags;
@@ -33,10 +34,10 @@ npm install vanjs-router
           button({ onclick: () => goto("about") }, "Go To About")
         );
       },
-      onFirst() {
+      async onFirst() {
         console.log("home onfirst");
       },
-      onLoad() {
+      async onLoad() {
         console.log("home onload");
       },
     });
@@ -51,7 +52,7 @@ npm install vanjs-router
           button({ onclick: () => goto("home") }, "Go To Home")
         );
       },
-      onLoad() {
+      async onLoad() {
         this.show();
       },
     });
