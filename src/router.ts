@@ -133,6 +133,3 @@ export const redirect = (from: string | RegExp, to: string) => {
         },
     })
 }
-
-/** `vanjs-router` */
-export default { nowHash, now, Handler, Route, goto, redirect }

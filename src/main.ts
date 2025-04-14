@@ -1,3 +1,3 @@
-import router from './router'
+import * as router from './router'
 
 Object.defineProperty(window, 'router', { value: router })
