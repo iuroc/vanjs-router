@@ -8,44 +8,46 @@
 </head>
 
 <body>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/vanjs-org/van/public/van-1.5.2.nomodule.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vanjs-router@latest/dist/vanjs-router.min.js"></script>
-<script>
-const { Route, goto } = router
-const { div, button } = van.tags
+    <script src="https://cdn.jsdelivr.net/gh/vanjs-org/van/public/van-1.5.2.nomodule.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanjs-router@v2.1.3/dist/vanjs-router.iife.js"></script>
+    <script>
+        const { Route, goto } = router;
+        const { a, p, div, button } = van.tags;
 
-const Home = () => Route({
-    rule: 'home',
-    Loader() {
-        return div(
-            'This Is Home Page.',
-            button({ onclick: () => goto('about') }, 'Go To About')
-        )
-    },
-    onFirst() {
-        console.log('home onfirst')
-    },
-    onLoad() {
-        console.log('home onload')
-    },
-})
+        const Home = () =>
+            Route({
+                rule: "home",
+                Loader() {
+                    return div(
+                        "This Is Home Page.",
+                        button({ onclick: () => goto("about") }, "Go To About")
+                    );
+                },
+                async onFirst() {
+                    console.log("home onfirst");
+                },
+                async onLoad() {
+                    console.log("home onload");
+                },
+            });
 
-const About = () => Route({
-    rule: 'about',
-    delayed: true,
-    Loader() {
-        return div(
-            'This Is About Page.',
-            button({ onclick: () => goto('home') }, 'Go To Home')
-        )
-    },
-    onLoad() {
-        this.show()
-    }
-})
+        const About = () =>
+            Route({
+                rule: "about",
+                delayed: true,
+                Loader() {
+                    return div(
+                        "This Is About Page.",
+                        button({ onclick: () => goto("home") }, "Go To Home")
+                    );
+                },
+                async onLoad() {
+                    this.show();
+                },
+            });
 
-van.add(document.body, Home(), About())
-</script>
+        van.add(document.body, Home(), About());
+    </script>
 </body>
 
 </html>
