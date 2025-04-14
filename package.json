@@ -11,7 +11,7 @@
 	},
 	"type": "module",
 	"name": "vanjs-router",
-	"version": "2.1.1",
+	"version": "2.1.2",
 	"main": "js/router.js",
 	"types": "src/router.ts"
 }
