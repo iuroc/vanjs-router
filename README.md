@@ -15,7 +15,7 @@ This is version 2. For version 1 documentation, please [click here](https://gith
 ## Quick Start
 
 ```shell
-npm install vanjs-router
+npm install @iuroc/vanjs-router
 ```
 
 ```html
