@@ -1,4 +1,6 @@
 index.html
-tsconfig.json
 vite.config.ts
 demo/
+src/
+log.md
+dist/*.map
