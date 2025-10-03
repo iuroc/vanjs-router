@@ -1,17 +1,18 @@
 {
 	"devDependencies": {
+		"pkgroll": "^2.17.0",
 		"typescript": "^5.5.4",
 		"vite": "^5.3.5"
 	},
 	"dependencies": {
 		"vanjs-core": "^1.5.1"
 	},
+	"types": "./dist/router.d.mts",
+	"exports": "./dist/router.mjs",
 	"scripts": {
-		"build": "vite build && tsc"
+		"build": "vite build && pkgroll --minify --sourcemap"
 	},
 	"type": "module",
 	"name": "@iuroc/vanjs-router",
-	"version": "2.1.4",
-	"main": "js/router.js",
-	"types": "src/router.ts"
+	"version": "2.1.5"
 }
