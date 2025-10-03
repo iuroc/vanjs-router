@@ -3,3 +3,4 @@ vite.config.ts
 demo/
 src/
 log.md
+dist/*.map

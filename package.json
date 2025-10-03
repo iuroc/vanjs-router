@@ -14,5 +14,17 @@
 	},
 	"type": "module",
 	"name": "@iuroc/vanjs-router",
-	"version": "2.1.5"
+	"version": "2.1.6",
+	"description": "Simple Frontend Routing Component Based on Van.js.",
+	"main": "dist/router.mjs",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bestroc/vanjs-router.git"
+	},
+	"author": "iuroc",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/bestroc/vanjs-router/issues"
+	},
+	"homepage": "https://github.com/bestroc/vanjs-router#readme"
 }
