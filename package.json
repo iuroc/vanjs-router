@@ -10,7 +10,7 @@
 		"build": "vite build && tsc"
 	},
 	"type": "module",
-	"name": "vanjs-router",
+	"name": "@iuroc/vanjs-router",
 	"version": "2.1.4",
 	"main": "js/router.js",
 	"types": "src/router.ts"
