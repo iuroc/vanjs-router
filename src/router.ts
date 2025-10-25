@@ -4,7 +4,7 @@ import van, { State } from 'vanjs-core'
 const nowHash = (): RouteInfo => {
     if (location.hash.startsWith('#/')) {
         const hash = location.hash.slice(2).split('/').filter(i => i.length > 0)
-        return { name: hash[0], args: hash.slice(1) }
+        return { name: hash[0] || 'home', args: hash.slice(1) }
     }
     return { name: 'home', args: [] }
 }
