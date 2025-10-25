@@ -46,13 +46,13 @@ export type HandlerConfig<E extends HTMLElement = HTMLElement> = {
 
 /** Route handler instance */
 export class Handler<E extends HTMLElement = HTMLElement> {
-    private rule: string | RegExp
+    public rule: string | RegExp
     /** Route parameters received after the current route is matched */
     public args: string[] = []
-    private Loader: (this: Handler<E>) => E
+    public Loader: (this: Handler<E>) => E
     private delayed = false
-    private onFirst: (this: Handler<E>) => any
-    private onLoad: (this: Handler<E>) => any
+    public onFirst: (this: Handler<E>) => any
+    public onLoad: (this: Handler<E>) => any
     /** Root element of the route, exported publicly and can be directly added to the DOM */
     public element: E
     /** Tracks whether this is the first time the route is matched to determine if `onFirst` should run */
