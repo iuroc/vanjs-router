@@ -1,13 +1,24 @@
 import van, { State } from 'vanjs-core'
 
 /** Returns the current value of `location.hash` after the `#/` prefix; returns `home` if empty */
-export const nowHash = (): string => location.hash ? location.hash.slice(2) : 'home'
+export const nowHash = (): RouteInfo => {
+    if (location.hash.startsWith('#/')) {
+        const hash = location.hash.slice(2).split('/').filter(i => i.length > 0)
+        return { name: hash[0], args: hash.slice(1) }
+    }
+    return { name: 'home', args: [] }
+}
 
 /** Current hash value without the leading #, value provided by `nowHash()` */
-export const now: State<string> = van.state(nowHash())
+export const nowRoute: State<RouteInfo> = van.state(nowHash())
+
+export interface RouteInfo {
+    name: string
+    args: string[]
+}
 
 window.addEventListener('hashchange', () => {
-    now.val = nowHash()
+    nowRoute.val = nowHash()
 })
 
 /** Configuration options for initializing a route handler */
@@ -64,21 +75,18 @@ export class Handler<E extends HTMLElement = HTMLElement> {
         const func = async () => {
             // Check if the current route matches this handler's rule
             const match = this.matchHash()
-            if (!match) {
-                // Not matched, hide the page element
-                this.hide()
-            } else {
-                // Route matched
-                // Save the received route parameters
-                this.args.splice(0) // clear old arguments
-                this.args.push(...match.args)
-                if (this.isFirstLoad) {
-                    this.isFirstLoad = false
-                    await this.onFirst()
-                }
-                await this.onLoad()
-                if (!this.delayed) this.show()
+            // Not matched, hide the page element
+            if (!match) return this.hide()
+            // Route matched
+            // Save the received route parameters
+            this.args.splice(0) // clear old arguments
+            this.args.push(...match.args)
+            if (this.isFirstLoad) {
+                this.isFirstLoad = false
+                await this.onFirst()
             }
+            await this.onLoad()
+            if (!this.delayed) this.show()
         }
         window.addEventListener('hashchange', func)
         func()
@@ -87,13 +95,13 @@ export class Handler<E extends HTMLElement = HTMLElement> {
     /** Check if the current Hash matches this route's rule */
     private matchHash(): false | { hash: string, args: string[] } {
         if (this.rule instanceof RegExp) {
-            const match = now.val.match(this.rule)
+            const match = nowRoute.val.match(this.rule)
             if (!match) return false
-            return { hash: now.val, args: [...match].slice(1) }
+            return { hash: nowRoute.val, args: [...match].slice(1) }
         }
-        const parts = now.val.split('/').filter(i => i.length > 0)
+        const parts = nowRoute.val.split('/').filter(i => i.length > 0)
         if (parts.length < 1) parts.push('home')
-        return parts[0] == this.rule ? { hash: now.val, args: parts.slice(1) } : false
+        return parts[0] == this.rule ? { hash: nowRoute.val, args: parts.slice(1) } : false
     }
 
     /** Show the route element */
@@ -115,7 +123,7 @@ export const Route = <E extends HTMLElement = HTMLElement>(config: HandlerConfig
  * @param name Route name to navigate to, corresponds to a string-type rule
  * @param args Route parameters
  */
-export const goto = (name: string, ...args: any[]): void => {
+export const toRoute = (name: string, ...args: any[]): void => {
     location.hash = name == 'home' && args.length == 0 ? '' : `/${[name, ...args].join('/')}`
 }
 
@@ -129,7 +137,7 @@ export const redirect = (from: string | RegExp, to: string) => {
         rule: from,
         Loader: van.tags.div,
         onLoad() {
-            goto(to)
+            toRoute(to)
         },
     })
 }
