@@ -22,15 +22,15 @@ export type HandlerConfig<E extends HTMLElement = HTMLElement> = {
      * { rule: /list_(\d+)/ }
      * ```
      */
-    rule: Handler<E>['rule']
+    rule: string | RegExp
     /** Loader function to build the current route page */
-    Loader: Handler<E>['Loader']
+    Loader: (this: Handler<E>) => E
     /** Lazy load the page; requires explicitly calling `show()` to display the page */
-    delayed?: Handler<E>['delayed']
+    delayed?: boolean
     /** Event triggered on first route match, executed before `onLoad` */
-    onFirst?: Handler<E>['onFirst']
+    onFirst?: (this: Handler<E>) => any
     /** Event triggered on route match, executed after awaiting `onFirst()` */
-    onLoad?: Handler<E>['onLoad']
+    onLoad?: (this: Handler<E>) => any
 }
 
 /** Route handler instance */

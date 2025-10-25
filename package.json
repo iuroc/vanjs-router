@@ -4,7 +4,7 @@
 		"typescript": "^5.5.4",
 		"vite": "^5.3.5"
 	},
-	"dependencies": {
+	"peerDependencies": {
 		"vanjs-core": "^1.5.1"
 	},
 	"types": "./dist/router.d.mts",
@@ -14,7 +14,7 @@
 	},
 	"type": "module",
 	"name": "@iuroc/vanjs-router",
-	"version": "2.1.8",
+	"version": "2.1.9",
 	"description": "Simple Frontend Routing Component Based on Van.js.",
 	"main": "dist/router.mjs",
 	"repository": {
