@@ -1,7 +1,7 @@
 import van, { State } from 'vanjs-core'
 
 /** Returns the current value of `location.hash` after the `#/` prefix; returns `home` if empty */
-export const nowHash = (): RouteInfo => {
+const nowHash = (): RouteInfo => {
     if (location.hash.startsWith('#/')) {
         const hash = location.hash.slice(2).split('/').filter(i => i.length > 0)
         return { name: hash[0], args: hash.slice(1) }
@@ -93,15 +93,13 @@ export class Handler<E extends HTMLElement = HTMLElement> {
     }
 
     /** Check if the current Hash matches this route's rule */
-    private matchHash(): false | { hash: string, args: string[] } {
+    private matchHash(): false | { args: string[] } {
         if (this.rule instanceof RegExp) {
-            const match = nowRoute.val.match(this.rule)
+            const match = nowRoute.val.name.match(this.rule)
             if (!match) return false
-            return { hash: nowRoute.val, args: [...match].slice(1) }
+            return { args: [...match].slice(1) }
         }
-        const parts = nowRoute.val.split('/').filter(i => i.length > 0)
-        if (parts.length < 1) parts.push('home')
-        return parts[0] == this.rule ? { hash: nowRoute.val, args: parts.slice(1) } : false
+        return nowRoute.val.name == this.rule ? nowRoute.val : false
     }
 
     /** Show the route element */
