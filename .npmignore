@@ -4,3 +4,4 @@ demo/
 src/
 log.md
 dist/*.map
+tsconfig.json

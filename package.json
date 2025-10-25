@@ -14,7 +14,7 @@
 	},
 	"type": "module",
 	"name": "@iuroc/vanjs-router",
-	"version": "2.1.9",
+	"version": "2.1.10",
 	"description": "Simple Frontend Routing Component Based on Van.js.",
 	"main": "dist/router.mjs",
 	"repository": {
