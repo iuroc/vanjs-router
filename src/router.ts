@@ -93,11 +93,9 @@ export class Handler<E extends HTMLElement = HTMLElement> {
     }
 
     /** Check if the current Hash matches this route's rule */
-    private matchHash(): false | { args: string[] } {
+    private matchHash(): false | RouteInfo {
         if (this.rule instanceof RegExp) {
-            const match = nowRoute.val.name.match(this.rule)
-            if (!match) return false
-            return { args: [...match].slice(1) }
+            return nowRoute.val.name.match(this.rule) ? nowRoute.val : false
         }
         return nowRoute.val.name == this.rule ? nowRoute.val : false
     }
